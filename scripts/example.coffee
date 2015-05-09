@@ -23,10 +23,10 @@ module.exports = (robot) ->
   # robot.hear /I like pie/i, (res) ->
   #   res.emote "makes a freshly baked pie"
   #
-  # lulz = ['lol', 'rofl', 'lmao']
-  #
-  # robot.respond /lulz/i, (res) ->
-  #   res.send res.random lulz
+  lulz = ['lol', 'rofl', 'lmao', 'meoww haha', 'funny']
+
+  robot.hear /lol/i, (res) ->
+     res.send res.random lulz
   #
   # robot.topic (res) ->
   #   res.send "#{res.message.text}? That's a Paddlin'"
@@ -89,18 +89,29 @@ module.exports = (robot) ->
   #   if res?
   #     res.reply "DOES NOT COMPUTE"
   #
-  # robot.respond /have a soda/i, (res) ->
-  #   # Get number of sodas had (coerced to a number).
-  #   sodasHad = robot.brain.get('totalSodas') * 1 or 0
-  #
-  #   if sodasHad > 4
-  #     res.reply "I'm too fizzy.."
-  #
-  #   else
-  #     res.reply 'Sure!'
-  #
-  #     robot.brain.set 'totalSodas', sodasHad+1
-  #
-  # robot.respond /sleep it off/i, (res) ->
-  #   robot.brain.set 'totalSodas', 0
-  #   res.reply 'zzzzz'
+  treats = [
+    "Yumm, another one please?",
+    "Next one, throw it further... meowww",
+    "Yummy, I love being a cat! Easy treats",
+    "Can we switch to a more fancy treat?",
+    "Can I have a chewy one please??",
+    "Meowwwww! Omnomonom, yumm."
+  ]
+  robot.respond /have a treat/i, (res) ->
+     # Get number of sodas had (coerced to a number).
+     treatsHad = robot.brain.get('totalTreats') * 1 or 0
+
+     if treatsHad > 4
+       res.reply "These treats are making me sleepy."
+
+     if treatsHad == 5
+       res.reply "Ok, that was the last treat, if you want to feed me again, make me nap first."
+
+     else
+       res.reply res.random treats
+
+       robot.brain.set 'totalTreats', treatsHad+1
+
+  robot.respond /nap/i, (res) ->
+     robot.brain.set 'totalTreats', 0
+     res.reply 'zzzzZZZzzz'
